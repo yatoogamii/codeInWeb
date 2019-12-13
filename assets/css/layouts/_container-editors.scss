@@ -1,0 +1,31 @@
+.container-editors * {
+  padding: 0;
+  margin: 0;
+}
+
+.container-editors {
+  display: flex;
+  width: 100%;
+
+  &__editors {
+    width: 100%;
+    padding: 5px;
+    height: 50vh;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+      width: 100%;
+      resize: horizontal;
+      background-color: rgba(29, 29, 29, 0.9);
+      border: 2px solid rgba(29, 29, 29, 1);
+      color: white;
+      padding: 5px;
+      font-size: 1.1rem;
+      height: 100%;
+    }
+
+  }
+
+}
