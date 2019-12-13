@@ -29,35 +29,42 @@ function convertHtml() {
   const htmlObject = document.createElement('article');
   const htmlValue = editor_html.value;
   htmlObject.innerHTML = htmlValue;
+  htmlObject.setAttribute('view', 'true');
   containerView.appendChild(htmlObject);
 }
 
 
 function convertCss() {
 
-  let lastStyleSheet = document.querySelector('style[key="0"]');
-  lastStyleSheet === null ? '' : lastStyleSheet.remove();
+  const allViewElements = containerView.querySelectorAll('*');
 
-  const style = editor_css.value;
-  const styleSheet = document.createElement('style');
-  styleSheet.type = "text/css";
-  styleSheet.innerHTML = style;
-  styleSheet.setAttribute('key', '0');
-  document.head.appendChild(styleSheet);
+  for (const element of allViewElements) {
+    element.style = '';
+  }
 
-  // let cssValue = editor_css.value
-  //   .replace(/\r?\n|\r/g, '')
-  //   .split(/[{;}]/)
-  //   .filter(Boolean);
+  let cssValue = editor_css.value
+    .replace(/\r?\n|\r/g, '')
+    .split(/[{;}]/)
+    .filter(Boolean);
 
-  // for (const element of cssValue) {
-  //   let tag = '';
-  //   let rule = '';
-  //   if (element.includes(':')) {
-  //     rule = tag;
-  //   } else {
-  //     tag = element;
-  //   }
-  // }
+  let tag = '';
+  let rule = '';
+
+  for (const element of cssValue) {
+
+    if (element.includes(':')) {
+      rule += element + '; ';
+    } else {
+      tag = element;
+      rule = '';
+    }
+
+    const tags = document.querySelectorAll(`[view="true"] ${tag}`);
+
+    for (const tag of tags) {
+      tag.style = rule;
+    }
+
+  }
 
 }
